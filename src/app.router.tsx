@@ -11,6 +11,7 @@ import { RegisterPage } from "./auth/pages/register/RegisterPage";
 import { DashboardPage } from "./admin/pages/dashboard/DashboardPage";
 import { AdminProductsPage } from "./admin/pages/products/AdminProductsPage";
 import { AdminProductPage } from "./admin/pages/product/AdminProductPage";
+import { AdminRoute, NotAuthenticatedRoute } from "./components/routes/ProtectedRoutes";
 
 
 const AuthLayout = lazy(() => import('./auth/layouts/AuthLayout'))
@@ -32,7 +33,7 @@ export const appRouter = createBrowserRouter([
                 element: <ProductPage />
             },
             {
-                path: 'gener/:gender',
+                path: 'gender/:gender',
                 element: <GenderPage />
             }
 
@@ -42,7 +43,10 @@ export const appRouter = createBrowserRouter([
     // Auth routes
     {
         path: '/auth',
-        element: <AuthLayout />,
+        element: 
+        <NotAuthenticatedRoute>
+            <AuthLayout />
+        </NotAuthenticatedRoute>,
         children: [
             {
                 index: true,
@@ -62,7 +66,10 @@ export const appRouter = createBrowserRouter([
     // Admin routes
     {
         path: '/admin',
-        element: <AdminLayout />,
+        element: 
+            <AdminRoute>
+                <AdminLayout />
+            </AdminRoute>,
         children: [
             {
                 index: true,
